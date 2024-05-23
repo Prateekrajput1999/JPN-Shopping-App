@@ -7,9 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+
 const jpnLogo = require("../assets/images/jpnLogo.jpg");
 
 const firstScreen = () => {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -34,14 +38,14 @@ const firstScreen = () => {
         please login or sign up to continue our app
       </Text>
       <View style={{ marginTop: 40 }}>
-        <Text style={{ fontWeight: "700", marginBottom: -6 }}>Email</Text>
+        <Text style={{ fontWeight: "700" }}>Email</Text>
         <View style={styles.textInputContainer}>
           <TextInput textContentType="emailAddress" style={styles.textInput} />
           <AntDesign name="checkcircle" size={24} color="black" />
         </View>
       </View>
       <View style={{ marginTop: 20 }}>
-        <Text style={{ fontWeight: "700", marginBottom: -6 }}>Password</Text>
+        <Text style={{ fontWeight: "700" }}>Password</Text>
         <View style={styles.textInputContainer}>
           <TextInput
             secureTextEntry={true}
@@ -86,11 +90,12 @@ const firstScreen = () => {
             marginTop: 16,
             backgroundColor: "skyblue",
           }}
+          onPress={() => router.push(`/signUp`)}
         >
           <Text style={styles.buttonLabel}>Create account</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View >
   );
 };
 
