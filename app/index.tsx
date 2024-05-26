@@ -1,9 +1,7 @@
 import {
-  Image,
   StyleSheet,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
@@ -62,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     marginBottom: 20,
     position: "absolute",
-    bottom: 150,
+    bottom: 120,
   },
   buttonSignUp: {
     width: "80%",
@@ -72,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     marginBottom: 20,
     position: "absolute",
-    bottom: 80,
+    bottom: 50,
   },
   buttonText: {
     color: "#000000",
