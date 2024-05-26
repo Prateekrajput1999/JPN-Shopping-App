@@ -15,7 +15,6 @@ const StackNavigator = () => {
           component={myscreen}
           initialParams={{ index: 0 }}
         />
-        <Stack.Screen name="login" component={login} />
       </Stack.Navigator>
     </NavigationContainer>
   );

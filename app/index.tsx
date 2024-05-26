@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const router = useRouter();
   return (
     <ImageBackground
-      source={require("../assets/images/page2new.jpg")} // Adjust the path as needed
+      source={require("../assets/images/page2new.jpg")}
       style={styles.background}
     >
       <View style={styles.overlay}>

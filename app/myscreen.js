@@ -2,7 +2,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import login from "./login";
+import index from "./index";
 
 const data = [
   {
@@ -41,7 +41,7 @@ const MyScreen = () => {
       navigation.setParams({ index: index + 1 });
     } else {
       // Navigate to login page
-      navigation.navigate("login");
+      navigation.navigate("index");
     }
   };
 
