@@ -7,9 +7,9 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
-import MyScreen from "../components/MyScreen";
+import myscreen from "./myscreen";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import StackNavigator from "../components/StackNavigator";
+import stackNavigator from "./stackNavigator";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,9 +36,8 @@ export default function RootLayout() {
       independent={true}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <Stack.Navigator initialRouteName="StackNavigator">
-        <Stack.Screen name="MyScreen" component={MyScreen} />
-        <Stack.Screen name="index" component={MyScreen} />
+      <Stack.Navigator initialRouteName="stackNavigator">
+        <Stack.Screen name="myscreen" component={myscreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

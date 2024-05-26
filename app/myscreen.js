@@ -2,7 +2,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import login from "../app/login";
+import login from "./login";
 
 const data = [
   {
@@ -47,7 +47,7 @@ const MyScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.screen}>
+      <View>
         <Image source={item.image} style={styles.image} />
         <Text style={styles.mainText}>{item.mainText}</Text>
         <Text style={styles.subText}>{item.subText}</Text>

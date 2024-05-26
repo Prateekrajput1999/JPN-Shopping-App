@@ -2,7 +2,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import MyScreen from "../components/MyScreen";
+import myscreen from "./myscreen";
 import login from "../app/login";
 const Stack = createStackNavigator();
 
@@ -11,11 +11,11 @@ const StackNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen
-          name="MyScreen"
-          component={MyScreen}
+          name="myscreen"
+          component={myscreen}
           initialParams={{ index: 0 }}
         />
-        <Stack.Screen name="Login" component={login} />
+        <Stack.Screen name="login" component={login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
