@@ -9,7 +9,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import Logo from "@/assets/svg/Logo";
-import JpnFinal from "../assets/images/JpnFinal.svg";
+// import JpnFinal from "../assets/images/JpnFinal.svg";
 
 // const jpnLogo = require("../assets/images/jpn2.jpg");
 
@@ -19,11 +19,11 @@ const firstScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        {/* <Image style={styles.logo} source={jpnLogo} /> */}
-        {/* <View> */}
-        {/* <Logo /> */}
-        {/* </View> */}
-        <JpnFinal />
+        <Image style={styles.logo} source={jpnLogo} />
+        <View>
+          <Logo />
+        </View>
+        {/* <JpnFinal /> */}
       </View>
       <Text
         style={{

@@ -1,18 +1,19 @@
+import React, { useEffect } from "react";
 import {
+  NavigationContainer,
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { createStackNavigator } from "@react-navigation/stack";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import "react-native-reanimated";
-
+import { useFonts } from "expo-font";
+import MyScreen from "../components/MyScreen";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import StackNavigator from "../components/StackNavigator";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const Stack = createStackNavigator();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -31,10 +32,14 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerTitle: "" }} />
-      </Stack>
-    </ThemeProvider>
+    <NavigationContainer
+      independent={true}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
+      <Stack.Navigator initialRouteName="StackNavigator">
+        <Stack.Screen name="MyScreen" component={MyScreen} />
+        <Stack.Screen name="index" component={MyScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
