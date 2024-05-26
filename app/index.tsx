@@ -8,11 +8,26 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { checkUserExists } from "@/utils/AsyncStorage";
+import { useState } from "react";
 
 const jpnLogo = require("../assets/images/jpnLogo.jpg");
 
 const firstScreen = () => {
+  const [userData, setUserData] = useState({
+    email: '',
+    password: ''
+  });
+  const [showError, setShowError] = useState(false);
   const router = useRouter();
+
+  const handleLogin = async (email: string, password: string) => {
+    console.log('logging in');
+    const result = await checkUserExists(email, password);
+    if (!result) {
+      setShowError(true);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -40,7 +55,13 @@ const firstScreen = () => {
       <View style={{ marginTop: 40 }}>
         <Text style={{ fontWeight: "700" }}>Email</Text>
         <View style={styles.textInputContainer}>
-          <TextInput textContentType="emailAddress" style={styles.textInput} />
+          <TextInput textContentType="emailAddress" style={styles.textInput} onChange={(e: any) => {
+            setShowError(false);
+            setUserData({
+              ...userData,
+              email: e.target.value
+            })
+          }} />
           <AntDesign name="checkcircle" size={24} color="black" />
         </View>
       </View>
@@ -51,12 +72,22 @@ const firstScreen = () => {
             secureTextEntry={true}
             textContentType="password"
             style={styles.textInput}
+            onChange={(e: any) => {
+              setShowError(false);
+              setUserData({
+                ...userData,
+                password: e.target.value
+              })
+            }}
           />
           <AntDesign name="checkcircle" size={24} color="black" />
         </View>
       </View>
+      {showError && (
+        <Text style={{ color: '#D32F2F', fontWeight: 500, marginTop: 20 }}>User do not exist!</Text>
+      )}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.loginButton}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.loginButton} onPress={() => handleLogin(userData.email, userData.password)}>
           <Text style={styles.buttonLabel}>Login</Text>
         </TouchableOpacity>
         <View style={{ position: "relative" }}>
