@@ -13,7 +13,10 @@ import CheckBox from "react-native-check-box";
 
 const jpnLogo = require("../assets/images/jpn2.jpg");
 
+import { useRouter } from "expo-router";
+
 const SignUp = () => {
+  const router = useRouter();
   const { width } = useWindowDimensions();
   return (
     <ScrollView style={styles.container}>
@@ -112,7 +115,12 @@ const SignUp = () => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity activeOpacity={0.7} style={styles.loginButton}>
-            <Text style={styles.buttonLabel}>Sign Up</Text>
+            <Text
+              style={styles.buttonLabel}
+              onPress={() => router.push(`/successful`)}
+            >
+              Sign Up
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
