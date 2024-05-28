@@ -1,90 +1,115 @@
 import {
-  StyleSheet,
   Text,
-  View,
+  Image,
+  StyleSheet,
+  ScrollView,
   TouchableOpacity,
-  ImageBackground,
+  useWindowDimensions,
 } from "react-native";
-
+import { useState } from "react";
 import { useRouter } from "expo-router";
 
-const HomeScreen = () => {
+const data = [
+  {
+    id: "1",
+    image: require("../assets/images/Girl1.jpg"),
+    mainText: "20% Discount New Arrival Product",
+    subText:
+      "Publish up your selfies to make yourself more beautiful with this app.",
+  },
+  {
+    id: "2",
+    image: require("../assets/images/Girl2.jpg"),
+    mainText: "Take Advantage Of The Offer Shopping",
+    subText:
+      "Publish up your selfies to make yourself more beautiful with this app.",
+  },
+  {
+    id: "3",
+    image: require("../assets/images/Boy1.jpg"),
+    mainText: "All Types Offers Within Your Reach",
+    subText:
+      "Publish up your selfies to make yourself more beautiful with this app.",
+  },
+];
+
+const IntroScreen = () => {
+  const { width, height } = useWindowDimensions();
+  const [pageIndex, setPageIndex] = useState(0);
+  const item = data[pageIndex];
   const router = useRouter();
+
+  const handlePress = () => {
+    if (pageIndex === 2) {
+      router.replace("entryAuth");
+      return;
+    }
+
+    setPageIndex((pageIndex) => pageIndex + 1);
+  };
+
   return (
-    <ImageBackground
-      source={require("../assets/images/page2new.jpg")}
-      style={styles.background}
-    >
-      <View style={styles.overlay}>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.buttonLogin}
-          onPress={() => router.push("/login")}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => router.push(`/signUp`)}
-          style={[styles.buttonSignUp, styles.signupButton]}
-        >
-          <Text style={[styles.buttonText, styles.signupButtonText]}>
-            Sign Up
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={item.image}
+        style={{
+          ...styles.image,
+          height: height * 0.6,
+          borderRadius: width * 0.05,
+        }}
+      />
+      <Text style={styles.mainText}>{item.mainText}</Text>
+      <Text style={styles.subText}>{item.subText}</Text>
+      <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <Text style={styles.buttonText}>→</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
+  container: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  image: {
+    width: "100%",
+  },
+  mainText: {
+    marginTop: 20,
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 10,
+    color: "#000",
+    textAlign: "center",
+  },
+  subText: {
+    fontSize: 16,
+    color: "#777",
+    position: "relative",
+    top: -60,
+    marginBottom: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  button: {
+    backgroundColor: "#000",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    height: "100%",
-  },
-  overlay: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // This will darken the background image
-    width: "100%",
-    height: "100%",
-  },
-  buttonLogin: {
-    width: "80%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    marginBottom: 20,
     position: "absolute",
-    bottom: 120,
-  },
-  buttonSignUp: {
-    width: "80%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    marginBottom: 20,
-    position: "absolute",
-    bottom: 50,
+    right: 25,
+    bottom: 25,
   },
   buttonText: {
-    color: "#000000",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  signupButton: {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderColor: "#FFFFFF",
-  },
-  signupButtonText: {
-    color: "#FFFFFF",
+    color: "#fff",
+    fontSize: 24,
   },
 });
 
-export default HomeScreen;
+export default IntroScreen;
