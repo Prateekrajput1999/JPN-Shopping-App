@@ -20,7 +20,7 @@ const data = [
   {
     id: "2",
     image: require("../assets/images/Girl2.jpg"),
-    mainText: "Take Advantage Of The Offer Shopping",
+    mainText: "Take Advantage Of The Offer Shoppings",
     subText:
       "Publish up your selfies to make yourself more beautiful with this app.",
   },
