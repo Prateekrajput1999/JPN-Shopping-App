@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "expo-router";
 
 const data = [

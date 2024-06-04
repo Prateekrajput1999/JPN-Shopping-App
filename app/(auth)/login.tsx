@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Image,
   StyleSheet,
@@ -16,6 +17,10 @@ const jpnLogo = require("../../assets/images/jpn2.jpg");
 const firstScreen = () => {
   const router = useRouter();
   const { height, width } = useWindowDimensions();
+
+  const handleLogin = () => {
+    router.push("/homePage");
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -70,7 +75,11 @@ const firstScreen = () => {
           </View>
         </View>
         <View style={{ marginTop: 40 }}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.loginButton}>
+          <TouchableOpacity
+            onPress={handleLogin}
+            activeOpacity={0.7}
+            style={styles.loginButton}
+          >
             <Text style={styles.buttonLabel}>Login</Text>
           </TouchableOpacity>
           <View style={{ position: "relative" }}>
