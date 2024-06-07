@@ -19,7 +19,8 @@ const firstScreen = () => {
   const { height, width } = useWindowDimensions();
 
   const handleLogin = () => {
-    router.push("/homePage");
+    router.dismissAll()
+    router.replace("/homePage");
   };
 
   return (
