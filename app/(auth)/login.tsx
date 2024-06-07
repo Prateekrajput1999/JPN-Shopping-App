@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Image,
   StyleSheet,
@@ -9,12 +10,19 @@ import {
   ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import CheckBox from "react-native-check-box";
+import { useRouter } from "expo-router";
 
-const jpnLogo = require("../assets/images/jpn2.jpg");
+const jpnLogo = require("../../assets/images/jpn2.jpg");
 
-const SignUp = () => {
-  const { width } = useWindowDimensions();
+const firstScreen = () => {
+  const router = useRouter();
+  const { height, width } = useWindowDimensions();
+
+  const handleLogin = () => {
+    router.dismissAll()
+    router.replace("/homePage");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -32,11 +40,11 @@ const SignUp = () => {
           style={{
             fontSize: 25,
             fontWeight: "600",
-            marginTop: 20,
+            marginTop: height / 25,
             marginBottom: 8,
           }}
         >
-          Sign Up
+          Welcome!
         </Text>
         <Text
           style={{
@@ -44,18 +52,8 @@ const SignUp = () => {
             fontWeight: "300",
           }}
         >
-          Create an new account
+          please login or sign up to continue our app
         </Text>
-        <View style={{ marginTop: 40 }}>
-          <Text style={{ fontWeight: "700" }}>Username</Text>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              textContentType="emailAddress"
-              style={styles.textInput}
-            />
-            <AntDesign name="checkcircle" size={24} color="black" />
-          </View>
-        </View>
         <View style={{ marginTop: 40 }}>
           <Text style={{ fontWeight: "700" }}>Email</Text>
           <View style={styles.textInputContainer}>
@@ -66,7 +64,7 @@ const SignUp = () => {
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
         </View>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 20 }}>
           <Text style={{ fontWeight: "700" }}>Password</Text>
           <View style={styles.textInputContainer}>
             <TextInput
@@ -78,41 +76,47 @@ const SignUp = () => {
           </View>
         </View>
         <View style={{ marginTop: 40 }}>
-          <Text style={{ fontWeight: "700" }}>Confirm Password</Text>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              secureTextEntry={true}
-              textContentType="password"
-              style={styles.textInput}
+          <TouchableOpacity
+            onPress={handleLogin}
+            activeOpacity={0.7}
+            style={styles.loginButton}
+          >
+            <Text style={styles.buttonLabel}>Login</Text>
+          </TouchableOpacity>
+          <View style={{ position: "relative" }}>
+            <View
+              style={{
+                borderBottomWidth: 1,
+                marginTop: 14,
+                borderColor: "#d3c6c6",
+                opacity: 0.3,
+              }}
             />
-            <AntDesign name="checkcircle" size={24} color="black" />
-          </View>
-        </View>
-        <View
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            flexDirection: "row",
-            marginTop: 40,
-          }}
-        >
-          <CheckBox
-            isChecked={false}
-            onClick={() => {}}
-            style={styles.checkbox}
-          />
-          <Text style={{ marginLeft: 5 }}>
-            By creating an account you agree with our
-            <Text style={{ color: "rgba(53, 44, 135, 1)", fontWeight: "700" }}>
-              {" "}
-              Terms & Conditions
+            <Text
+              style={{
+                position: "absolute",
+                top: 4,
+                left: "48%",
+                fontWeight: "400",
+                backgroundColor: "white",
+                padding: 2,
+                paddingTop: 0,
+                borderRadius: 59,
+              }}
+            >
+              or
             </Text>
-          </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.loginButton}>
-            <Text style={styles.buttonLabel}>Sign Up</Text>
+          </View>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={{
+              ...styles.loginButton,
+              marginTop: 16,
+              backgroundColor: "skyblue",
+            }}
+            onPress={() => router.push(`/signUp`)}
+          >
+            <Text style={styles.buttonLabel}>Create account</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -140,9 +144,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#d3c6c6",
   },
-  buttonContainer: {
-    marginTop: 40,
-  },
   loginButton: {
     alignItems: "center",
     justifyContent: "center",
@@ -151,9 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     elevation: 3,
     backgroundColor: "black",
-    marginBottom: 25,
   },
-  checkbox: {},
   buttonLabel: {
     fontSize: 16,
     lineHeight: 21,
@@ -163,4 +162,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default firstScreen;
