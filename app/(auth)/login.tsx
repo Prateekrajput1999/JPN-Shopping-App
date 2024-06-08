@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Image,
   StyleSheet,
   Text,
   View,
@@ -13,8 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Stack, useRouter } from "expo-router";
 import { useState } from "react";
 import { checkUserExists } from "@/utils/AsyncStorage";
-
-const jpnLogo = require("../../assets/images/jpn2.jpg");
+import NewLogo from "@/assets/svg/NewLogo";
 
 const firstScreen = () => {
   const [userData, setUserData] = useState({
@@ -27,7 +25,7 @@ const firstScreen = () => {
     userDoesNotExist: "",
   });
   const router = useRouter();
-  const { height, width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
 
   const handleLogin = async (email: string, password: string) => {
     if (!email || !password) {
@@ -94,14 +92,7 @@ const firstScreen = () => {
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <View>
-        <Image
-          style={{
-            ...styles.logo,
-            height: width * 0.29,
-            width: "100%",
-          }}
-          source={jpnLogo}
-        />
+        <NewLogo />
       </View>
       <View style={{ paddingHorizontal: 20 }}>
         <Text

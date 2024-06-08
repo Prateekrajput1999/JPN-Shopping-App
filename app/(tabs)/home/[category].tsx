@@ -2,8 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View, FlatList } from "react-native";
-import singleCategory from "@/components/singleCategory.json";
+import { ScrollView, StyleSheet, View, FlatList } from "react-native";
 import ProductCard from "@/components/ProductCard";
 import LottieView from "lottie-react-native";
 
@@ -31,8 +30,8 @@ const categoryPage = () => {
             autoPlay
             loop
           />
-          // <Text>Loading...</Text>
         ) : (
+          // <Text>Loading...</Text>
           <View style={styles.listContainer}>
             <FlatList
               data={productList}
