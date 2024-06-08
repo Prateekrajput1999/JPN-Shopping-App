@@ -11,14 +11,72 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import CheckBox from "react-native-check-box";
+import { useState } from "react";
 
 const jpnLogo = require("../../assets/images/jpn2.jpg");
 
 import { useRouter } from "expo-router";
+import { setItem } from "@/utils/AsyncStorage";
 
 const SignUp = () => {
+  const [userData, setUserData] = useState({
+    userName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    uniqueId: '',
+    checkBox: false
+  });
+  const [showError, setShowError] = useState({
+    userNameError: '',
+    emailError: '',
+    passwordError: '',
+    confirmPasswordError: ''
+  });
   const router = useRouter();
   const { width } = useWindowDimensions();
+
+  const handleSignUp = async (username: string, email: string, password: string, id: string) => {
+    if (!username || !email || !password || !userData.confirmPassword || !userData.checkBox) {
+
+      const newErrors = {
+        userNameError: !username ? 'Username is required!' : '',
+        emailError: !email ? 'Email Id is required!' : '',
+        passwordError: !password ? 'Password is required!' : '',
+        confirmPasswordError: !userData.confirmPassword ? 'Pls rewrite the same password!' : ''
+      };
+
+      setShowError({
+        ...showError,
+        ...newErrors
+      });
+
+      return;
+
+    };
+
+    const newUser = {
+      userName: username,
+      email: email,
+      password: password,
+      uniqueId: id
+    };
+
+    await setItem(newUser);
+
+    setUserData({
+      userName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      uniqueId: '',
+      checkBox: false
+    });
+
+    router.push(`/login`)
+  };
+
+
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -54,21 +112,49 @@ const SignUp = () => {
           <Text style={{ fontWeight: "700" }}>Username</Text>
           <View style={styles.textInputContainer}>
             <TextInput
-              textContentType="emailAddress"
+              textContentType="username"
+              value={userData.userName}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError({
+                  ...showError,
+                  userNameError: ''
+                });
+                setUserData({
+                  ...userData,
+                  userName: e.target.value
+                })
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.userNameError !== '' && (
+            <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.userNameError}</Text>
+          )}
         </View>
         <View style={{ marginTop: 40 }}>
           <Text style={{ fontWeight: "700" }}>Email</Text>
           <View style={styles.textInputContainer}>
             <TextInput
               textContentType="emailAddress"
+              value={userData.email}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError({
+                  ...showError,
+                  emailError: ''
+                });
+                setUserData({
+                  ...userData,
+                  email: e.target.value
+                })
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.emailError !== '' && (
+            <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.emailError}</Text>
+          )}
         </View>
         <View style={{ marginTop: 40 }}>
           <Text style={{ fontWeight: "700" }}>Password</Text>
@@ -76,10 +162,24 @@ const SignUp = () => {
             <TextInput
               secureTextEntry={true}
               textContentType="password"
+              value={userData.password}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError({
+                  ...showError,
+                  passwordError: ''
+                });
+                setUserData({
+                  ...userData,
+                  password: e.target.value
+                })
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.passwordError !== '' && (
+            <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.passwordError}</Text>
+          )}
         </View>
         <View style={{ marginTop: 40 }}>
           <Text style={{ fontWeight: "700" }}>Confirm Password</Text>
@@ -87,10 +187,24 @@ const SignUp = () => {
             <TextInput
               secureTextEntry={true}
               textContentType="password"
+              value={userData.confirmPassword}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError({
+                  ...showError,
+                  confirmPasswordError: ''
+                });
+                setUserData({
+                  ...userData,
+                  confirmPassword: e.target.value
+                })
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.confirmPasswordError !== '' && (
+            <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.confirmPasswordError}</Text>
+          )}
         </View>
         <View
           style={{
@@ -102,8 +216,11 @@ const SignUp = () => {
           }}
         >
           <CheckBox
-            isChecked={false}
-            onClick={() => {}}
+            isChecked={userData.checkBox}
+            onClick={() => setUserData({
+              ...userData,
+              checkBox: !userData.checkBox
+            })}
             style={styles.checkbox}
           />
           <Text style={{ marginLeft: 5 }}>
@@ -115,10 +232,17 @@ const SignUp = () => {
           </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.loginButton}>
+          <TouchableOpacity activeOpacity={0.7} style={styles.loginButton} onPress={() => {
+            const id = crypto.randomUUID();
+            console.log('create id', id);
+            setUserData({
+              ...userData,
+              uniqueId: id
+            });
+            handleSignUp(userData.userName, userData.email, userData.password, id);
+          }}>
             <Text
               style={styles.buttonLabel}
-              onPress={() => router.push(`/successful`)}
             >
               Sign Up
             </Text>

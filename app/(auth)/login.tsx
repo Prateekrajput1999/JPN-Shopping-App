@@ -11,17 +11,34 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useState } from "react";
+import { checkUserExists } from "@/utils/AsyncStorage";
 
 const jpnLogo = require("../../assets/images/jpn2.jpg");
 
 const firstScreen = () => {
+  const [userData, setUserData] = useState({
+    email: '',
+    password: ''
+  });
+  const [showError, setShowError] = useState(false);
   const router = useRouter();
   const { height, width } = useWindowDimensions();
 
-  const handleLogin = () => {
-    router.dismissAll()
-    router.replace("/homePage");
-  };
+  const handleLogin = async (email: string, password: string) => {
+    const result = await checkUserExists(email, password);
+    if (!result) {
+      setShowError(true);
+    }
+
+    setUserData({
+      email: '',
+      password: ''
+    });
+
+    // router.dismissAll()
+    // router.replace("/homePage");
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -59,7 +76,15 @@ const firstScreen = () => {
           <View style={styles.textInputContainer}>
             <TextInput
               textContentType="emailAddress"
+              value={userData.email}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError(false);
+                setUserData({
+                  ...userData,
+                  email: e.target.value
+                })
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
@@ -70,14 +95,25 @@ const firstScreen = () => {
             <TextInput
               secureTextEntry={true}
               textContentType="password"
+              value={userData.password}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError(false);
+                setUserData({
+                  ...userData,
+                  password: e.target.value
+                })
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
         </View>
+        {showError && (
+          <Text style={{ color: '#D32F2F', fontWeight: 500, marginTop: 20 }}>User do not exist!</Text>
+        )}
         <View style={{ marginTop: 40 }}>
           <TouchableOpacity
-            onPress={handleLogin}
+            onPress={() => handleLogin(userData.email, userData.password)}
             activeOpacity={0.7}
             style={styles.loginButton}
           >
