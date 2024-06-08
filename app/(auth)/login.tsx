@@ -20,7 +20,7 @@ const firstScreen = () => {
 
   const handleLogin = () => {
     router.dismissAll()
-    router.replace("/homePage");
+    router.replace("/home");
   };
 
   return (

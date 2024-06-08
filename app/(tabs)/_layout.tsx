@@ -6,21 +6,22 @@ import { StyleSheet } from "react-native";
 const TabLayout = () => {
   const params = usePathname();
   return (
-    <Tabs sceneContainerStyle={{ marginTop: 30 }}>
+    <Tabs sceneContainerStyle={{ marginTop: 10 }}>
       <Tabs.Screen
-        name="homePage"
+        name="home"
         options={{
           tabBarIcon: () => (
             <FontAwesome
               name="home"
               size={24}
-              color={params === "/homePage" ? "white" : "black"}
+              color={params.startsWith("/home") ? "white" : "black"}
             />
           ),
           tabBarLabel: () => undefined,
           headerShown: false,
-          tabBarItemStyle:
-            params === "/homePage" ? styles.selectedTabIcon : null,
+          tabBarItemStyle: params.startsWith("/home")
+            ? styles.selectedTabIcon
+            : null,
         }}
       />
       <Tabs.Screen

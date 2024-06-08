@@ -1,18 +1,19 @@
 import React from "react";
 
 import { StyleSheet, Text, Pressable } from "react-native";
+import { usePathname, useRouter } from "expo-router";
 
 export type Props = {
   name: string;
-  url: string;
+  slug: string;
 };
 
-const Categories = ({ name, url }: Props) => {
+const Categories = ({ name, slug }: Props) => {
+  const pathname = usePathname();
+  const { push, replace } = useRouter();
   return (
     <Pressable
-      onPress={() => {
-        console.log("What is url", url);
-      }}
+      onPress={() => push(`${pathname}/${slug}`)}
       style={({ pressed }) => {
         return { ...styles.container, opacity: pressed ? 0.7 : 1 };
       }}
@@ -45,5 +46,3 @@ const styles = StyleSheet.create({
 });
 
 export default Categories;
-
-// ["expo-fonts", { "fonts": ["./assets/fonts/HappyMonkey-Regular.ttf"] }]

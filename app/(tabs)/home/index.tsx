@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { TextInput } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
@@ -21,7 +21,7 @@ const HomePage = () => {
     HappyMonkey: require("@/assets/fonts/HappyMonkey-Regular.ttf"),
   });
 
-  const ItemsList: [{ name: string; url: string }] = data?.data;
+  const ItemsList: [Props] = data?.data;
 
   return (
     <ScrollView>
@@ -43,13 +43,13 @@ const HomePage = () => {
         {isPending ? (
           <LottieView
             style={{ height: 400, width: 400, alignSelf: "center" }}
-            source={require("../../assets/lottie/loadingAnimation.json")}
+            source={require("@/assets/lottie/loadingAnimation.json")}
             autoPlay
             loop
           />
         ) : (
-          ItemsList.map(({ name, url }) => {
-            return <Categories key={url} name={name} url={url} />;
+          ItemsList.map(({ name, slug }) => {
+            return <Categories key={slug} name={name} slug={slug} />;
           })
         )}
       </View>
