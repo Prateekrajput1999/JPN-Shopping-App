@@ -3,10 +3,11 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
   useWindowDimensions,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
+import { FontAwesome } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
 const data = [
@@ -24,23 +25,16 @@ const data = [
     subText:
       "Publish up your selfies to make yourself more beautiful with this app.",
   },
-  {
-    id: "3",
-    image: require("../assets/images/Boy1.jpg"),
-    mainText: "All Types Offers Within Your Reach",
-    subText:
-      "Publish up your selfies to make yourself more beautiful with this app.",
-  },
 ];
 
 const IntroScreen = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [pageIndex, setPageIndex] = useState(0);
   const item = data[pageIndex];
   const router = useRouter();
 
   const handlePress = () => {
-    if (pageIndex === 2) {
+    if (pageIndex === 1) {
       router.replace("entryAuth");
       return;
     }
@@ -53,16 +47,20 @@ const IntroScreen = () => {
       <Image
         source={item.image}
         style={{
-          ...styles.image,
-          height: height * 0.6,
+          height: width * 0.9,
+          width: width * 0.99,
           borderRadius: width * 0.05,
         }}
       />
       <Text style={styles.mainText}>{item.mainText}</Text>
-      <Text style={styles.subText}>{item.subText}</Text>
-      <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.buttonText}>→</Text>
-      </TouchableOpacity>
+      <Pressable
+        style={({ pressed }) => {
+          return { ...styles.button, opacity: pressed ? 0.7 : 1 };
+        }}
+        onPress={handlePress}
+      >
+        <FontAwesome name="arrow-circle-right" size={60} color="black" />
+      </Pressable>
     </ScrollView>
   );
 };
@@ -70,13 +68,9 @@ const IntroScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    justifyContent: "space-between",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#fff",
-  },
-  image: {
-    width: "100%",
+    marginTop: 6
   },
   mainText: {
     marginTop: 20,
@@ -96,19 +90,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    backgroundColor: "#000",
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
     position: "absolute",
     right: 25,
-    bottom: 25,
+    bottom: 20,
   },
   buttonText: {
     color: "#fff",
-    fontSize: 24,
+    fontSize: 30,
+    marginBottom: 5,
   },
 });
 

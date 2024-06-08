@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -16,6 +16,7 @@ const HomeScreen = () => {
       source={require("../../assets/images/page2new.jpg")}
       style={styles.background}
     >
+      <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.overlay}>
         <TouchableOpacity
           activeOpacity={0.7}

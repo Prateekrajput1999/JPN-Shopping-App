@@ -1,3 +1,4 @@
+import { Stack } from "expo-router";
 import React from "react";
 import {
   Text,
@@ -13,6 +14,7 @@ const SuccessScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <Image
         style={{
           ...styles.image,

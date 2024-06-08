@@ -31,6 +31,7 @@ const categoryPage = () => {
             autoPlay
             loop
           />
+          // <Text>Loading...</Text>
         ) : (
           <View style={styles.listContainer}>
             <FlatList

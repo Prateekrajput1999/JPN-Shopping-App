@@ -47,6 +47,7 @@ const HomePage = () => {
             autoPlay
             loop
           />
+          // <Text>Loading...</Text>
         ) : (
           ItemsList.map(({ name, slug }) => {
             return <Categories key={slug} name={name} slug={slug} />;
