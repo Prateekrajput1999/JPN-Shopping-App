@@ -21,14 +21,46 @@ const firstScreen = () => {
     email: '',
     password: ''
   });
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState({
+    emailError: '',
+    passwordError: '',
+    userDoesNotExist: ''
+  });
   const router = useRouter();
   const { height, width } = useWindowDimensions();
 
   const handleLogin = async (email: string, password: string) => {
+    if (!email || !password) {
+
+      const newErrors = {
+        emailError: !email ? 'Email Id is required!' : '',
+        passwordError: !password ? 'Password is required!' : '',
+        confirmPasswordError: ''
+      };
+
+      setShowError({
+        ...showError,
+        ...newErrors
+      });
+
+      return;
+
+    };
+
     const result = await checkUserExists(email, password);
+
     if (!result) {
-      setShowError(true);
+      const newErrors = {
+        emailError: '',
+        passwordError: '',
+        confirmPasswordError: 'User does not exist !!'
+      };
+
+      setShowError({
+        ...showError,
+        ...newErrors
+      });
+
     }
 
     setUserData({
@@ -71,7 +103,7 @@ const firstScreen = () => {
         >
           please login or sign up to continue our app
         </Text>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 40, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Email</Text>
           <View style={styles.textInputContainer}>
             <TextInput
@@ -79,7 +111,10 @@ const firstScreen = () => {
               value={userData.email}
               style={styles.textInput}
               onChange={(e: any) => {
-                setShowError(false);
+                setShowError({
+                  ...showError,
+                  emailError: ''
+                });
                 setUserData({
                   ...userData,
                   email: e.target.value
@@ -88,8 +123,11 @@ const firstScreen = () => {
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.emailError !== '' && (
+            <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.emailError}</Text>
+          )}
         </View>
-        <View style={{ marginTop: 20 }}>
+        <View style={{ marginTop: 20, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Password</Text>
           <View style={styles.textInputContainer}>
             <TextInput
@@ -98,7 +136,10 @@ const firstScreen = () => {
               value={userData.password}
               style={styles.textInput}
               onChange={(e: any) => {
-                setShowError(false);
+                setShowError({
+                  ...showError,
+                  passwordError: ''
+                });
                 setUserData({
                   ...userData,
                   password: e.target.value
@@ -107,8 +148,11 @@ const firstScreen = () => {
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.passwordError !== '' && (
+            <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.passwordError}</Text>
+          )}
         </View>
-        {showError && (
+        {showError.userDoesNotExist && (
           <Text style={{ color: '#D32F2F', fontWeight: 500, marginTop: 20 }}>User do not exist!</Text>
         )}
         <View style={{ marginTop: 40 }}>

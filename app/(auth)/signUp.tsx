@@ -108,7 +108,7 @@ const SignUp = () => {
         >
           Create an new account
         </Text>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 40, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Username</Text>
           <View style={styles.textInputContainer}>
             <TextInput
@@ -132,7 +132,7 @@ const SignUp = () => {
             <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.userNameError}</Text>
           )}
         </View>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 40, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Email</Text>
           <View style={styles.textInputContainer}>
             <TextInput
@@ -156,7 +156,7 @@ const SignUp = () => {
             <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.emailError}</Text>
           )}
         </View>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 40, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Password</Text>
           <View style={styles.textInputContainer}>
             <TextInput
@@ -181,7 +181,7 @@ const SignUp = () => {
             <Text style={{ color: '#D32F2F', fontWeight: 500 }}>{showError.passwordError}</Text>
           )}
         </View>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 40, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Confirm Password</Text>
           <View style={styles.textInputContainer}>
             <TextInput
