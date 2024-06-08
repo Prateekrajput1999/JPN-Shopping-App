@@ -35,6 +35,8 @@ const SignUp = () => {
   });
   const router = useRouter();
   const { width } = useWindowDimensions();
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 
   const handleSignUp = async (username: string, email: string, password: string, id: string) => {
     if (!username || !email || !password || !userData.confirmPassword || !userData.checkBox) {
@@ -54,6 +56,31 @@ const SignUp = () => {
       return;
 
     };
+
+    if (!emailRegex.test(email)) {
+      console.log('testing email');
+      setShowError({
+        ...showError,
+        emailError: 'Pls enter a valid email address!'
+      })
+      return;
+    }
+
+    if (password.length < 8) {
+      setShowError({
+        ...showError,
+        passwordError: 'Minimum 8 letters are required!'
+      });
+      return;
+    }
+
+    if (password !== userData.confirmPassword) {
+      setShowError({
+        ...showError,
+        confirmPasswordError: 'Password does not match!'
+      });
+      return;
+    }
 
     const newUser = {
       userName: username,
@@ -234,7 +261,6 @@ const SignUp = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity activeOpacity={0.7} style={styles.loginButton} onPress={() => {
             const id = crypto.randomUUID();
-            console.log('create id', id);
             setUserData({
               ...userData,
               uniqueId: id

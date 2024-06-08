@@ -35,7 +35,7 @@ const firstScreen = () => {
       const newErrors = {
         emailError: !email ? 'Email Id is required!' : '',
         passwordError: !password ? 'Password is required!' : '',
-        confirmPasswordError: ''
+        userDoesNotExist: ''
       };
 
       setShowError({
@@ -48,12 +48,13 @@ const firstScreen = () => {
     };
 
     const result = await checkUserExists(email, password);
+    console.log('res', result);
 
-    if (!result) {
+    if (!result?.emailId && !result?.password) {
       const newErrors = {
         emailError: '',
         passwordError: '',
-        confirmPasswordError: 'User does not exist !!'
+        userDoesNotExist: 'User does not exist!'
       };
 
       setShowError({
@@ -61,6 +62,25 @@ const firstScreen = () => {
         ...newErrors
       });
 
+      return;
+    }
+
+    if (!result?.emailId && result?.password) {
+      setShowError({
+        ...showError,
+        emailError: 'Email id does not exist!',
+        userDoesNotExist: ''
+      });
+      return;
+    }
+
+    if (result?.emailId && !result?.password) {
+      setShowError({
+        ...showError,
+        passwordError: 'Password is incorrect!',
+        userDoesNotExist: ''
+      });
+      return;
     }
 
     setUserData({

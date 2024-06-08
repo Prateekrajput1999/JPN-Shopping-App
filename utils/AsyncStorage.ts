@@ -26,21 +26,32 @@ export const setItem = async (newUser: object) => {
 
 export const checkUserExists = async (email: string, password: string) => {
     try {
-        let userExist = false;
+        let userExistence = {
+            emailId: false,
+            password: false
+        }
         // Retrieve existing users
         const existingUsers = await AsyncStorage.getItem('users');
         const users = existingUsers ? JSON.parse(existingUsers) : [];
 
         // Check if any user matches the provided email and password
         const user = users.find((user: any) => user.email === email && user.password === password);
+        const emailIdExist = users.find((user: any) => user.email === email);
+        const passwordIsCorrect = users.find((user: any) => user.password === password);
 
         if (user) {
-            userExist = true;
+            userExistence = {
+                emailId: true,
+                password: true
+            }
+            return userExistence;
         } else {
-            userExist = false
+            userExistence = {
+                emailId: emailIdExist,
+                password: passwordIsCorrect
+            }
+            return userExistence;
         }
-
-        return userExist;
     } catch (error) {
         console.error('Error checking user:', error);
     }
