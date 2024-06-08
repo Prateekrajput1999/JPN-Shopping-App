@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Image,
   StyleSheet,
   Text,
   View,
@@ -12,11 +11,9 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import CheckBox from "react-native-check-box";
 import { useState } from "react";
-
-const jpnLogo = require("../../assets/images/jpn2.jpg");
-
 import { useRouter } from "expo-router";
 import { setItem } from "@/utils/AsyncStorage";
+import NewLogo from "@/assets/svg/NewLogo";
 
 const SignUp = () => {
   const [userData, setUserData] = useState({
@@ -107,14 +104,7 @@ const SignUp = () => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        <Image
-          style={{
-            ...styles.logo,
-            height: width * 0.29,
-            width: "100%",
-          }}
-          source={jpnLogo}
-        />
+        <NewLogo />
       </View>
       <View style={{ paddingHorizontal: 20 }}>
         <Text
