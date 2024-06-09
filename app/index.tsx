@@ -1,90 +1,104 @@
 import {
-  StyleSheet,
   Text,
-  View,
-  TouchableOpacity,
-  ImageBackground,
+  Image,
+  StyleSheet,
+  ScrollView,
+  useWindowDimensions,
+  Pressable,
 } from "react-native";
-
+import React, { useState } from "react";
+import { FontAwesome } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
-const HomeScreen = () => {
+const data = [
+  {
+    id: "1",
+    image: require("../assets/images/Girl1.jpg"),
+    mainText: "20% Discount New Arrival Product",
+    subText:
+      "Publish up your selfies to make yourself more beautiful with this app.",
+  },
+  {
+    id: "2",
+    image: require("../assets/images/Girl2.jpg"),
+    mainText: "Take Advantage Of The Offer Shoppings",
+    subText:
+      "Publish up your selfies to make yourself more beautiful with this app.",
+  },
+];
+
+const IntroScreen = () => {
+  const { width } = useWindowDimensions();
+  const [pageIndex, setPageIndex] = useState(0);
+  const item = data[pageIndex];
   const router = useRouter();
+
+  const handlePress = () => {
+    if (pageIndex === 1) {
+      router.replace("entryAuth");
+      return;
+    }
+
+    setPageIndex((pageIndex) => pageIndex + 1);
+  };
+
   return (
-    <ImageBackground
-      source={require("../assets/images/page2new.jpg")}
-      style={styles.background}
-    >
-      <View style={styles.overlay}>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.buttonLogin}
-          onPress={() => router.push("/login")}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => router.push(`/signUp`)}
-          style={[styles.buttonSignUp, styles.signupButton]}
-        >
-          <Text style={[styles.buttonText, styles.signupButtonText]}>
-            Sign Up
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={item.image}
+        style={{
+          height: width * 0.9,
+          width: width * 0.99,
+          borderRadius: width * 0.05,
+        }}
+      />
+      <Text style={styles.mainText}>{item.mainText}</Text>
+      <Pressable
+        style={({ pressed }) => {
+          return { ...styles.button, opacity: pressed ? 0.7 : 1 };
+        }}
+        onPress={handlePress}
+      >
+        <FontAwesome name="arrow-circle-right" size={60} color="black" />
+      </Pressable>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: "center",
+  container: {
+    flexGrow: 1,
     alignItems: "center",
-    width: "100%",
-    height: "100%",
+    padding: 20,
+    marginTop: 6,
   },
-  overlay: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // This will darken the background image
-    width: "100%",
-    height: "100%",
+  mainText: {
+    marginTop: 20,
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 10,
+    color: "#000",
+    textAlign: "center",
   },
-  buttonLogin: {
-    width: "80%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
+  subText: {
+    fontSize: 16,
+    color: "#777",
+    position: "relative",
+    top: -60,
     marginBottom: 20,
-    position: "absolute",
-    bottom: 120,
+    fontWeight: "bold",
+    textAlign: "center",
   },
-  buttonSignUp: {
-    width: "80%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    marginBottom: 20,
+  button: {
     position: "absolute",
-    bottom: 50,
+    right: 25,
+    bottom: 20,
   },
   buttonText: {
-    color: "#000000",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  signupButton: {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderColor: "#FFFFFF",
-  },
-  signupButtonText: {
-    color: "#FFFFFF",
+    color: "#fff",
+    fontSize: 30,
+    marginBottom: 5,
   },
 });
 
-export default HomeScreen;
+export default IntroScreen;

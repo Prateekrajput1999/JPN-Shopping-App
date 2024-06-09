@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
 import {
-  NavigationContainer,
   DarkTheme,
   DefaultTheme,
+  ThemeProvider,
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
-import myscreen from "./myscreen";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import stackNavigator from "./stackNavigator";
-import app from "./app";
+import { Stack } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
 
-const Stack = createStackNavigator();
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -33,13 +31,15 @@ export default function RootLayout() {
   }
 
   return (
-    <NavigationContainer
-      independent={true}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
-      <Stack.Navigator initialRouteName="stackNavigator">
-        <Stack.Screen name="app" component={app} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }

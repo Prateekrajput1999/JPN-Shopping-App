@@ -1,5 +1,5 @@
+import React from "react";
 import {
-  Image,
   StyleSheet,
   Text,
   View,
@@ -9,29 +9,90 @@ import {
   ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-
-const jpnLogo = require("../assets/images/jpn2.jpg");
+import { Stack, useRouter } from "expo-router";
+import { useState } from "react";
+import { checkUserExists } from "@/utils/AsyncStorage";
+import NewLogo from "@/assets/svg/NewLogo";
 
 const firstScreen = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+  const [showError, setShowError] = useState({
+    emailError: "",
+    passwordError: "",
+    userDoesNotExist: "",
+  });
   const router = useRouter();
-  const { height, width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
+
+  const handleLogin = async (email: string, password: string) => {
+    if (!email || !password) {
+      const newErrors = {
+        emailError: !email ? "Email Id is required!" : "",
+        passwordError: !password ? "Password is required!" : "",
+        userDoesNotExist: "",
+      };
+
+      setShowError({
+        ...showError,
+        ...newErrors,
+      });
+
+      return;
+    }
+
+    const result = await checkUserExists(email, password);
+    console.log("res", result);
+
+    if (!result?.emailId && !result?.password) {
+      const newErrors = {
+        emailError: "",
+        passwordError: "",
+        userDoesNotExist: "User does not exist!",
+      };
+
+      setShowError({
+        ...showError,
+        ...newErrors,
+      });
+
+      return;
+    }
+
+    if (!result?.emailId && result?.password) {
+      setShowError({
+        ...showError,
+        emailError: "Email id does not exist!",
+        userDoesNotExist: "",
+      });
+      return;
+    }
+
+    if (result?.emailId && !result?.password) {
+      setShowError({
+        ...showError,
+        passwordError: "Password is incorrect!",
+        userDoesNotExist: "",
+      });
+      return;
+    }
+
+    setUserData({
+      email: "",
+      password: "",
+    });
+
+    router.dismissAll();
+    router.replace("/home");
+  };
 
   return (
     <ScrollView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <View>
-        <Image
-          style={{
-            ...styles.logo,
-            height: width * 0.29,
-            width: "100%",
-          }}
-          source={jpnLogo}
-        />
-        {/* <View> */}
-        {/* <Logo /> */}
-        {/* </View> */}
-        {/* <JpnFinal /> */}
+        <NewLogo />
       </View>
       <View style={{ paddingHorizontal: 20 }}>
         <Text
@@ -52,29 +113,70 @@ const firstScreen = () => {
         >
           please login or sign up to continue our app
         </Text>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 40, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Email</Text>
           <View style={styles.textInputContainer}>
             <TextInput
               textContentType="emailAddress"
+              value={userData.email}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError({
+                  ...showError,
+                  emailError: "",
+                });
+                setUserData({
+                  ...userData,
+                  email: e.target.value,
+                });
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.emailError !== "" && (
+            <Text style={{ color: "#D32F2F", fontWeight: 500 }}>
+              {showError.emailError}
+            </Text>
+          )}
         </View>
-        <View style={{ marginTop: 20 }}>
+        <View style={{ marginTop: 20, height: 64 }}>
           <Text style={{ fontWeight: "700" }}>Password</Text>
           <View style={styles.textInputContainer}>
             <TextInput
               secureTextEntry={true}
               textContentType="password"
+              value={userData.password}
               style={styles.textInput}
+              onChange={(e: any) => {
+                setShowError({
+                  ...showError,
+                  passwordError: "",
+                });
+                setUserData({
+                  ...userData,
+                  password: e.target.value,
+                });
+              }}
             />
             <AntDesign name="checkcircle" size={24} color="black" />
           </View>
+          {showError.passwordError !== "" && (
+            <Text style={{ color: "#D32F2F", fontWeight: 500 }}>
+              {showError.passwordError}
+            </Text>
+          )}
         </View>
+        {showError.userDoesNotExist && (
+          <Text style={{ color: "#D32F2F", fontWeight: 500, marginTop: 20 }}>
+            User do not exist!
+          </Text>
+        )}
         <View style={{ marginTop: 40 }}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.loginButton}>
+          <TouchableOpacity
+            onPress={() => handleLogin(userData.email, userData.password)}
+            activeOpacity={0.7}
+            style={styles.loginButton}
+          >
             <Text style={styles.buttonLabel}>Login</Text>
           </TouchableOpacity>
           <View style={{ position: "relative" }}>
@@ -123,6 +225,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     height: "100%",
     backgroundColor: "white",
+    marginTop: 4,
   },
   logo: {
     marginTop: 5,

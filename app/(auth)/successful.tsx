@@ -1,6 +1,6 @@
+import { Stack } from "expo-router";
 import React from "react";
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -14,13 +14,14 @@ const SuccessScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <Image
         style={{
           ...styles.image,
           width: width * 0.4,
           height: width * 0.4,
         }}
-        source={require("../assets/images/check-green.gif")}
+        source={require("../../assets/images/check-green.gif")}
       />
       <Text style={styles.title}>Successful!</Text>
       <Text style={styles.message}>
