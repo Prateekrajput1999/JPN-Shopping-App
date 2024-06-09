@@ -10,6 +10,7 @@ import { useFonts } from "expo-font";
 import myscreen from "./myscreen";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import stackNavigator from "./stackNavigator";
+import app from "./app";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,7 +38,7 @@ export default function RootLayout() {
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       <Stack.Navigator initialRouteName="stackNavigator">
-        <Stack.Screen name="myscreen" component={myscreen} />
+        <Stack.Screen name="app" component={app} />
       </Stack.Navigator>
     </NavigationContainer>
   );
