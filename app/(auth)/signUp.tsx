@@ -143,14 +143,14 @@ const SignUp = () => {
               textContentType="username"
               value={userData.userName}
               style={styles.textInput}
-              onChange={(e: any) => {
+              onChangeText={(e: any) => {
                 setShowError({
                   ...showError,
                   userNameError: "",
                 });
                 setUserData({
                   ...userData,
-                  userName: e.target.value,
+                  userName: e,
                 });
               }}
             />
@@ -169,14 +169,14 @@ const SignUp = () => {
               textContentType="emailAddress"
               value={userData.email}
               style={styles.textInput}
-              onChange={(e: any) => {
+              onChangeText={(e: any) => {
                 setShowError({
                   ...showError,
                   emailError: "",
                 });
                 setUserData({
                   ...userData,
-                  email: e.target.value,
+                  email: e,
                 });
               }}
             />
@@ -196,14 +196,14 @@ const SignUp = () => {
               textContentType="password"
               value={userData.password}
               style={styles.textInput}
-              onChange={(e: any) => {
+              onChangeText={(e: any) => {
                 setShowError({
                   ...showError,
                   passwordError: "",
                 });
                 setUserData({
                   ...userData,
-                  password: e.target.value,
+                  password: e,
                 });
               }}
             />
@@ -223,14 +223,14 @@ const SignUp = () => {
               textContentType="password"
               value={userData.confirmPassword}
               style={styles.textInput}
-              onChange={(e: any) => {
+              onChangeText={(e: any) => {
                 setShowError({
                   ...showError,
                   confirmPasswordError: "",
                 });
                 setUserData({
                   ...userData,
-                  confirmPassword: e.target.value,
+                  confirmPassword: e,
                 });
               }}
             />

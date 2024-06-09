@@ -120,14 +120,14 @@ const firstScreen = () => {
               textContentType="emailAddress"
               value={userData.email}
               style={styles.textInput}
-              onChange={(e: any) => {
+              onChangeText={(e: any) => {
                 setShowError({
                   ...showError,
                   emailError: "",
                 });
                 setUserData({
                   ...userData,
-                  email: e.target.value,
+                  email: e,
                 });
               }}
             />
@@ -147,14 +147,14 @@ const firstScreen = () => {
               textContentType="password"
               value={userData.password}
               style={styles.textInput}
-              onChange={(e: any) => {
+              onChangeText={(e: any) => {
                 setShowError({
                   ...showError,
                   passwordError: "",
                 });
                 setUserData({
                   ...userData,
-                  password: e.target.value,
+                  password: e,
                 });
               }}
             />
