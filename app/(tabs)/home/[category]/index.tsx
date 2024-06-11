@@ -4,7 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, View, FlatList } from "react-native";
 import ProductCard from "@/components/ProductCard";
-import LottieView from "lottie-react-native";
+import LoadingAnimation from "@/components/LoadingAnimation";
 
 const categoryPage = () => {
   const { category } = useLocalSearchParams();
@@ -24,12 +24,7 @@ const categoryPage = () => {
     <ScrollView style={{ height: "100%" }}>
       <View style={styles.container}>
         {isPending ? (
-          <LottieView
-            style={{ height: 400, width: 400, alignSelf: "center" }}
-            source={require("@/assets/lottie/loadingAnimation.json")}
-            autoPlay
-            loop
-          />
+          <LoadingAnimation />
         ) : (
           // <Text>Loading...</Text>
           <View style={styles.listContainer}>

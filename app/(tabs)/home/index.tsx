@@ -4,10 +4,10 @@ import { TextInput } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import LottieView from "lottie-react-native";
 // import categoryData from "@/components/categoryData.json";
 import Categories, { Props } from "@/components/Categories";
 import { useFonts } from "expo-font";
+import LoadingAnimation from "@/components/LoadingAnimation";
 
 const HomePage = () => {
   const { data, isPending, error } = useQuery({
@@ -41,13 +41,7 @@ const HomePage = () => {
         </View>
         <View style={{ marginTop: 10 }} />
         {isPending ? (
-          <LottieView
-            style={{ height: 400, width: 400, alignSelf: "center" }}
-            source={require("@/assets/lottie/loadingAnimation.json")}
-            autoPlay
-            loop
-          />
-          // <Text>Loading...</Text>
+          <LoadingAnimation />
         ) : (
           ItemsList.map(({ name, slug }) => {
             return <Categories key={slug} name={name} slug={slug} />;

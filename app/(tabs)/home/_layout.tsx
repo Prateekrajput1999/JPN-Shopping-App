@@ -6,9 +6,10 @@ const homePageLayout = () => {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
-        name="[category]"
+        name="[category]/index"
         options={{ headerBackButtonMenuEnabled: true, title: "Products" }}
       />
+      <Stack.Screen name="p/[productId]" options={{ headerShown: false }} />
     </Stack>
   );
 };

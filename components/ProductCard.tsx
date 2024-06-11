@@ -1,17 +1,25 @@
 import React from "react";
 import {
   Image,
+  Pressable,
   StyleSheet,
   Text,
-  View,
   useWindowDimensions,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 const ProductCard = ({ productDetails }: any) => {
-  const { height, width } = useWindowDimensions();
-  const { thumbnail, title, brand, price } = productDetails?.item;
+  const { width } = useWindowDimensions();
+  const { push } = useRouter();
+  const { thumbnail, title, brand, price, id } = productDetails?.item;
   return (
-    <View style={styles.container}>
+    <Pressable
+      onPress={() => {
+        console.log("Clicking product");
+        push(`/home/p/${id}`);
+      }}
+      style={styles.container}
+    >
       <Image
         source={thumbnail}
         src={thumbnail}
@@ -39,7 +47,7 @@ const ProductCard = ({ productDetails }: any) => {
       >
         {price}$
       </Text>
-    </View>
+    </Pressable>
   );
 };
 
@@ -50,10 +58,10 @@ const styles = StyleSheet.create({
     margin: 3,
     borderWidth: 1,
     borderColor: "gray",
-    borderRadius: 9
+    borderRadius: 9,
   },
   thumbnail: {
-    borderRadius: 5
+    borderRadius: 5,
     // borderBottomWidth: 1,
     // borderRadius: 9,
     // borderColor: "gray",
